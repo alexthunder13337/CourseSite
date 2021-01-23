@@ -1,0 +1,946 @@
+{% extends 'landpage/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<script src="https://use.fontawesome.com/f299f2885e.js"></script>
+<!-- Header -->
+<style>
+    .center-block {
+        float: none;
+    }
+
+    body {
+        background: linear-gradient(-45deg, rgba(210, 59, 25, 0.5), rgba(224, 78, 51, 0.5), rgba(255, 44, 0, 0.5), rgba(255, 44, 0, 0.05));
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .btn-secondary {
+        width: 300px;
+        height: 60px;
+        color: white;
+        background-color: #ff3838;
+        font-size: larger;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .pricecolor {
+        color: #003bff;
+    }
+
+    .btn-primary {
+        width: 400px;
+        height: 60px;
+        color: white;
+        background-color: #ff3838;
+        font-size: larger;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* --------------------------------------------------------------
+ * ## text rotator
+ * -------------------------------------------------------------- */
+
+    /*Sentence*/
+    .sentence {
+        text-align: center;
+        color: #222;
+        font-size: 30px;
+        alignment: center;
+        align-items: center;
+    }
+
+    /*Vertical Sliding*/
+    .slidingVertical {
+        display: flex;
+        text-indent: 8px;
+    }
+
+    .slidingVertical span {
+        animation: topToBottom 10s linear infinite 0s;
+        -ms-animation: topToBottom 10s linear infinite 0s;
+        -webkit-animation: topToBottom 10s linear infinite 0s;
+        color: #ffffff;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .slidingVertical span:nth-child(2) {
+        animation-delay: 2.5s;
+        -ms-animation-delay: 2.5s;
+        -webkit-animation-delay: 2.5s;
+    }
+
+    .slidingVertical span:nth-child(3) {
+        animation-delay: 5s;
+        -ms-animation-delay: 5s;
+        -webkit-animation-delay: 5s;
+    }
+
+    .slidingVertical span:nth-child(4) {
+        animation-delay: 7.5s;
+        -ms-animation-delay: 7.5s;
+        -webkit-animation-delay: 7.5s;
+    }
+
+
+    /*topToBottom Animation*/
+    @-moz-keyframes topToBottom {
+        0% {
+            opacity: 0;
+        }
+        5% {
+            opacity: 0;
+            -moz-transform: translateY(-50px);
+        }
+        10% {
+            opacity: 1;
+            -moz-transform: translateY(0px);
+        }
+        25% {
+            opacity: 1;
+            -moz-transform: translateY(0px);
+        }
+        30% {
+            opacity: 0;
+            -moz-transform: translateY(50px);
+        }
+        80% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes topToBottom {
+        0% {
+            opacity: 0;
+        }
+        5% {
+            opacity: 0;
+            -webkit-transform: translateY(-50px);
+        }
+        10% {
+            opacity: 1;
+            -webkit-transform: translateY(0px);
+        }
+        25% {
+            opacity: 1;
+            -webkit-transform: translateY(0px);
+        }
+        30% {
+            opacity: 0;
+            -webkit-transform: translateY(50px);
+        }
+        80% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @-ms-keyframes topToBottom {
+        0% {
+            opacity: 0;
+        }
+        5% {
+            opacity: 0;
+            -ms-transform: translateY(-50px);
+        }
+        10% {
+            opacity: 1;
+            -ms-transform: translateY(0px);
+        }
+        25% {
+            opacity: 1;
+            -ms-transform: translateY(0px);
+        }
+        30% {
+            opacity: 0;
+            -ms-transform: translateY(50px);
+        }
+        80% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+
+    :root {
+        --bg-table-stripe: #f6f6f5;
+        --b-table: #e3e3e2;
+        --caption: #242423;
+    }
+
+    table {
+        background-color: transparent;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 1.2em;
+        padding: 20px;
+        font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    th {
+        text-align: left
+    }
+
+    .dcf-txt-center {
+        text-align: center !important
+    }
+
+    .dcf-txt-justify {
+        text-align: justify !important
+    }
+
+    .dcf-txt-left {
+        text-align: left !important
+    }
+
+    .dcf-txt-right {
+        text-align: right !important
+    }
+
+    .dcf-table caption {
+        color: var(--caption);
+        font-size: 1.13em;
+        font-weight: 700;
+        padding-bottom: .56rem
+    }
+
+    .dcf-table thead {
+        font-size: .84em
+    }
+
+    .dcf-table tbody {
+        font-size: .84em
+    }
+
+    .dcf-table tfoot {
+        font-size: .84em
+    }
+
+    .dcf-table td, .dcf-table th {
+        padding-right: 1.78em
+    }
+
+    .dcf-table-bordered, .dcf-table-bordered td, .dcf-table-bordered th {
+    }
+
+    .dcf-table-bordered td, .dcf-table-bordered th, .dcf-table-striped td, .dcf-table-striped th {
+        padding-left: 1em;
+        padding-right: 1em
+    }
+
+    .dcf-table-bordered tr:not(:last-child), .dcf-table-striped tr:not(:last-child) {
+    }
+
+    .dcf-table-striped tbody tr:nth-of-type(2n) {
+        background-color: var(--bg-table-stripe)
+    }
+
+    .dcf-table thead td, .dcf-table thead th {
+        padding-bottom: .75em;
+        vertical-align: bottom
+    }
+
+    .dcf-table tbody td, .dcf-table tbody th, .dcf-table tfoot td, .dcf-table tfoot th {
+        padding-top: .75em;
+        vertical-align: top
+    }
+
+    .dcf-table tbody td, .dcf-table tbody th {
+        padding-bottom: .75em
+    }
+
+    .dcf-table-bordered thead th {
+        padding-top: 1.33em
+    }
+
+    .dcf-wrapper-table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        padding-bottom: 1em;
+        position: relative;
+        right: 50%;
+        width: 100vw
+    }
+
+    @media only screen and (max-width: 42.09em) {
+        .dcf-table-responsive thead {
+            clip: rect(0 0 0 0);
+            -webkit-clip-path: inset(50%);
+            clip-path: inset(50%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            width: 1px;
+            white-space: nowrap
+        }
+
+        .dcf-table-responsive tr {
+            display: block
+        }
+
+        .dcf-table-responsive td {
+            -webkit-column-gap: 3.16vw;
+            -moz-column-gap: 3.16vw;
+            column-gap: 3.16vw;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            text-align: left !important
+        }
+
+        .dcf-table-responsive.dcf-table-bordered, .dcf-table-responsive.dcf-table-bordered thead th {
+            border-width: 0
+        }
+
+        .dcf-table-responsive.dcf-table-bordered tbody td {
+            border-top-width: 0
+        }
+
+        .dcf-table-responsive:not(.dcf-table-bordered) tbody tr {
+            padding-bottom: .75em
+        }
+
+        .dcf-table-responsive:not(.dcf-table-bordered) tbody td {
+            padding-bottom: 0
+        }
+
+        .dcf-table-responsive:not(.dcf-table-bordered):not(.dcf-table-striped) tbody td {
+            padding-right: 0
+        }
+
+        .dcf-table-responsive.dcf-table-bordered tbody tr:last-child td:last-child {
+            border-bottom-width: 0
+        }
+
+        .dcf-table-responsive tbody td:before {
+            content: attr(data-label);
+            float: left;
+            font-weight: 700;
+            padding-right: 1.78em
+        }
+    }
+
+    .dcf-overflow-x-auto {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch
+    }
+
+    ul.social-buttonss {
+        margin-bottom: 0;
+    }
+
+    ul.social-buttonss li a {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        font-size: 20px;
+        line-height: 40px;
+        outline: 0;
+        color: #fff;
+        background-image: linear-gradient(to bottom right, rgb(255, 172, 18), rgb(251, 165, 20), rgb(246, 159, 21), rgb(242, 152, 23), rgb(238, 146, 25), rgb(233, 139, 27), rgb(229, 133, 28), rgb(224, 126, 30), rgb(220, 120, 32), rgb(216, 113, 34), rgb(211, 107, 35), rgb(207, 100, 37));
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        transition: all .3s;
+    }
+
+    ul.social-buttonss li a:hover,
+    ul.social-buttonss li a:focus,
+    ul.social-buttonss li a:active {
+        background-color: #ff7300;
+    }
+
+    .btn:focus,
+    .btn:active,
+    .btn.active,
+    .btn:active:focus {
+        outline: 0;
+    }
+
+    .mintable {
+        display: none;
+        margin: 15px;
+        width: auto;
+        overflow: hidden;
+    }
+
+    .mingrid-container {
+        padding-bottom: 45px;
+        padding-top: 10px;
+        text-align: center;
+        display: grid;
+        grid-template-columns: 90%;
+        grid-template-rows: auto auto auto auto auto;
+        gap: 0px 0px;
+        grid-template-areas:
+    "NAME"
+    "DESC"
+    "DESC2"
+    "PRICE"
+    "BUTTON";
+    }
+
+    .NAME {
+        grid-area: NAME;
+    }
+
+    .DESC {
+        grid-area: DESC;
+    }
+
+    .DESC2 {
+        grid-area: DESC2;
+    }
+
+    .PRICE {
+        padding-top: 10px;
+        grid-area: PRICE;
+    }
+
+    .BUTTON {
+        padding-top: 30px;
+        grid-area: BUTTON;
+    }
+
+    @media (max-width: 1220px) {
+        .maxwidthtable {
+            display: none;
+        }
+
+        .mintable {
+            display: grid;
+        }
+    }
+</style>
+<!--HI THERE-->
+<div class="wrapperrr" style="width: 100%; margin: 0 auto; overflow: hidden">
+    <div style="padding-top: 150px;">
+        <img class="center-block" style="max-width: 400px;"
+             src="{% static 'img/landpage.png' %}">
+    </div>
+    <div class="container-fluid" style="margin: auto">
+        <div class="row" style="alignment: center">
+            <div class="center-block" style="alignment: center !important; text-align: center">
+                <ul class="list-inline social-buttonss">
+                    <li><a href="https://api.whatsapp.com/send?phone=79163046570&text=" target="_blank"><i
+                            class="fa fa-whatsapp"></i></a></li>
+                    <li><a href="https://www.facebook.com/marietta_sarkisyan-107027600757417/" target="_blank"><i
+                            class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://www.instagram.com/english_marietta/" target="_blank"><i
+                            class="fa fa-instagram"></i></a></li>
+                    <li><a href="mailto:english.marietta@gmail.com" target="_blank"><i class="fa fa-google"></i></a>
+                    </li>
+                    <li><a href="https://t.me/english_marietta" target="_blank"><i class="fa fa-telegram"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="color: white; padding-top: 10px; padding-bottom: 30px">
+        <div class="row">
+            <div class="col-lg-12"><h1 class="text-center">Hi There!</h1></div>
+        </div>
+        <div class="row" style="text-align: center">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <p1 class="h3">Вот и настал час заговорить на английском. За 13 лет практики преподавания
+                    английского я помогла сотням людей достичь абсолютно различных целей в изучении языка: кто-то из
+                    «нуля»
+                    превратился в свободного болтогола, кто-то отточил уровень до мастера, кто-то сдал международные
+                    экзамены и эмигрировал в англоязычные страны, кто-то прошел интервью и получил работу мечты... Чего
+                    только не было. Но важно то, что со мной ты, наконец, достигнешь своей цели в изучении языка, какой
+                    бы
+                    амбициозной она не была.
+                </p1>
+            </div>
+            <div class="col-lg-3"></div>
+
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row" style="text-align: center">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="sentence"><strong>Как именно я могу тебе
+                    помочь?
+                    <br><br>
+                    <div class="slidingVertical">
+                        <span>Дистанционно 👌</span>
+                        <span>Быстро 👌</span>
+                        <span>Просто 👌</span>
+                        <span>Эффективно 👌</span>
+                    </div>
+                    <br><br>
+                    Смотри ниже какие
+                    курсы подходят именно тебе и записывайся на них уже сейчас.</strong>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+            <br>
+        </div>
+    </div>
+
+    <div class="mintable">
+        <div class="mingrid-container">
+            <div class="NAME"><strong><h2>Прожиточный минимум</h2></strong></div>
+            <div class="DESC"><strong>Курс, в котором вы разберетесь в
+                базовых временах английского языка,<br> узнаете нюансы целого
+                ряда конструкций и многое другое.<br>
+                Курс включает 15 уроков, каждый из который состоит из небольших видео <br>(3-5 видео в каждом уроке) +
+                домашка.<br>
+                В этом курсе собраны темы, которые я считаю<br> must have в голове каждого современного
+                человека:</strong></div>
+            <div class="DESC2"><strong>1. Порядок слов в предложении <br>
+                2. 9 времён<br>
+                3. Предлоги<br>
+                4. Все о глаголе to be<br>
+                5. Вопросы<br>
+                6. Конструкции to be going to и used to<br>
+                7. Пассивный залог<br>
+                8. Модальные глаголы<br>
+                9. Базовые фразовые<br>
+                Кому подойдет курс? Всем от уровня "я ниче не знаю"<br> до уровня "что-то вроде знаю, но все равно ниче
+                не
+                понимаю". <br>Если пафосными терминами, то от Beginner до Intermediate.</strong></div>
+            <div class="PRICE"><strong style="font-size: larger">
+                Цена:
+                <br>
+                <span class="pricecolor">6 999 руб. </span> с обратной связью и устной частью <br>
+                <span class="pricecolor">4 599 руб. </span> без обратной связи и устной части
+            </strong></div>
+            <div class="BUTTON"><span>
+                    <button type="button"
+                            onclick='window.open("//api.whatsapp.com/send?phone=79163046570&text=ДОБРОГО ВРЕМЕНИ СУТОК, Я ХОТЕЛ(А) БЫ ЗАПИСАТЬСЯ НА КУРС ПРОЖИТОЧНЫЙ МИНИМУМ", "_blank");'
+                            class="btn btn-xl"><span class="fa fa-whatsapp fa-2x" style="font-size: 1.2em;"
+                                                     aria-hidden="true">  <strong
+                            style="font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif">Записаться на курс!</strong></span></button>
+                </span></div>
+        </div>
+        <div style="border: white solid 3px; width: 100%;"></div>
+        <div class="mingrid-container">
+            <div class="NAME"><strong><h2>Прожиточный
+                максимум</h2></strong></div>
+            <div class="DESC"><strong>Курс,
+                в
+                котором вы разберетесь в сложных конструкциях и,<br>
+                наконец, заговорите как профи.<br>
+                Курс включает 10 видео уроков + домашку после каждого.<br> В этом курсе собраны мои самые любимые
+                темы:</strong></div>
+            <div class="DESC2"><strong>1.
+                Perfect Continuous<br>
+                2. Косвенная речь/согласование времён<br>
+                3. Прошедшее время модальных глаголов (которого как бы не существует, но существует)<br>
+                4. Условные предложения (тот самый пример про Романа Аркадьевича)<br>
+                5. Сложные типы вопросов<br>
+                6. Все формы Passive Voice<br>
+                7. Числительные всех видов (это только один, два, три...)<br>
+                8. Вводные слова, которые сразу добавят вашей речи офигенности<br>
+
+                Кому подойдет курс? Всем, кто уже знает как работают модальные глаголы,<br> и чем отличается Past Simple
+                от
+                Present Perfect. Если пафосными терминами, <br>то от Pre-Intermediate до Upper-Intermediate. </strong>
+            </div>
+            <div class="PRICE"><strong
+                    style="font-size: larger">
+                Цена:<br>
+                <span class="pricecolor">5 999 руб. </span> с обратной связью и устной частью <br>
+                <span class="pricecolor">3 999 руб. </span> без обратной связи и устной части
+            </strong></div>
+            <div class="BUTTON"><span>
+                    <button type="button"
+                            onclick='window.open("//api.whatsapp.com/send?phone=79163046570&text=ДОБРОГО ВРЕМЕНИ СУТОК, Я ХОТЕЛ(А) БЫ ЗАПИСАТЬСЯ НА КУРС ПРОЖИТОЧНЫЙ МАКСИМУМ", "_blank");'
+                            class="btn btn-xl"><span class="fa fa-whatsapp fa-2x" style="font-size: 1.2em;"
+                                                     aria-hidden="true">  <strong
+                            style="font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif">Записаться на курс!</strong></span></button>
+                </span></div>
+        </div>
+        <div style="border: white solid 3px; width: 100%;"></div>
+        <div class="mingrid-container">
+            <div class="NAME"><strong><h2>Группа по разбору песен</h2></strong></div>
+            <div class="DESC"><strong>Раз в неделю в закрытом аккаунте я провожу разбор
+                песни.<br>
+                За пару дней до разбора я высылаю текст песни с пропусками.<br>
+                Задача – до разбора послушать песню и заполнить пропущенные слова.</strong></div>
+            <div class="DESC2"><strong>Во время эфира я рассказываю какие слова были пропущены,<br> какие крутые
+                обороты
+                использовались, почему грамматически авторы<br> взяли те или иные времена и конструкции.<br>
+                Ты можешь задать любой вопрос по тексту песни. Но кроме самих эфиров,<br> которые я ЕСТЕСТВЕННО
+                сохраняю,
+                есть
+                группа в WhatsApp.<br>
+                Туда можно писать 24/7 и уточнять все, что душе угодно.<br>
+                Песни на разбор выбираем вместе.<br>
+                Таким образом, разбирая свои любимые песни на английском, ты запомнишь массу новых слов,<br> подтянешь
+                грамматику и узнаешь самые часто используемые обороты и выражения.<br>
+                Кому подойдет участие в группе? <br>ВСЕМ!!! Всем, кто хочет выучить/подтянуть инглиш.</strong></div>
+            <div class="PRICE"><strong style="font-size: larger">
+                Цена<br>
+                <span class="pricecolor">1 400 руб./месяц </span> (4-5 занятий, в зависимости от количества дней
+                в месяце)
+            </strong></div>
+            <div class="BUTTON"><span>
+                    <button type="button"
+                            onclick='window.open("//api.whatsapp.com/send?phone=79163046570&text=ДОБРОГО ВРЕМЕНИ СУТОК, Я ХОТЕЛ(А) БЫ ЗАПИСАТЬСЯ В ГРУППУ ПО РАЗОБРУ ПЕСЕН", "_blank");'
+                            class="btn btn-xl"><span class="fa fa-whatsapp fa-2x" style="font-size: 1.2em;"
+                                                     aria-hidden="true">  <strong
+                            style="font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif">Записаться на курс!</strong></span></button>
+                </span></div>
+        </div>
+    </div>
+    <div class="maxwidthtable" style="width: 100%; align-content: center; text-align: center; alignment: center">
+        <table class="dcf-table dcf-table-bordered dcf-w-100%"
+               style="min-height: 700px; width: 90%; margin: 20px; padding: 20px;">
+            <tbody>
+            <tr>
+                <td class="dcf-txt-center"><span>
+                    <button type="button"
+                            onclick='window.open("//api.whatsapp.com/send?phone=79163046570&text=ДОБРОГО ВРЕМЕНИ СУТОК, Я ХОТЕЛ(А) БЫ ЗАПИСАТЬСЯ НА КУРС ПРОЖИТОЧНЫЙ МИНИМУМ", "_blank");'
+                            class="btn btn-xl"><span class="fa fa-whatsapp fa-2x" style="font-size: 1.2em;"
+                                                     aria-hidden="true">  <strong
+                            style="font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif">Записаться на курс!</strong></span></button>
+                </span></td>
+                <td class="dcf-txt-center" style="border-right: white 2px solid; border-left: white 2px solid"><span>
+                    <button type="button"
+                            onclick='window.open("//api.whatsapp.com/send?phone=79163046570&text=ДОБРОГО ВРЕМЕНИ СУТОК, Я ХОТЕЛ(А) БЫ ЗАПИСАТЬСЯ НА КУРС ПРОЖИТОЧНЫЙ МАКСИМУМ", "_blank");'
+                            class="btn btn-xl"><span class="fa fa-whatsapp fa-2x" style="font-size: 1.2em;"
+                                                     aria-hidden="true">  <strong
+                            style="font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif">Записаться на курс!</strong></span></button>
+                </span></td>
+                <td class="dcf-txt-center"><span>
+                    <button type="button"
+                            onclick='window.open("//api.whatsapp.com/send?phone=79163046570&text=ДОБРОГО ВРЕМЕНИ СУТОК, Я ХОТЕЛ(А) БЫ ЗАПИСАТЬСЯ В ГРУППУ ПО РАЗОБРУ ПЕСЕН", "_blank");'
+                            class="btn btn-xl"><span class="fa fa-whatsapp fa-2x" style="font-size: 1.2em;"
+                                                     aria-hidden="true">  <strong
+                            style="font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif">Записаться на курс!</strong></span></button>
+                </span></td>
+            </tr>
+            <tr>
+                <td class="dcf-txt-center" style="font-size: 1.5em"><strong>Прожиточный минимум</strong></td>
+                <td class="dcf-txt-center"
+                    style="font-size: 1.5em; border-right: white 2px solid; border-left: white 2px solid"><strong>Прожиточный
+                    максимум</strong></td>
+                <td class="dcf-txt-center" style="font-size: 1.5em"><strong>Группа по разбору песен</strong></td>
+            </tr>
+            <tr>
+                <td class="dcf-txt-center"><strong>Курс, в котором вы разберетесь в
+                    базовых временах английского языка,<br> узнаете нюансы целого
+                    ряда конструкций и многое другое.<br>
+                    Курс включает 15 уроков, каждый из который состоит из небольших видео <br>(3-5 видео в каждом уроке)
+                    +
+                    домашка.<br>
+                    В этом курсе собраны темы, которые я считаю<br> must have в голове каждого современного
+                    человека:</strong>
+                </td>
+                <td class="dcf-txt-center" style="border-right: white 2px solid; border-left: white 2px solid"><strong>Курс,
+                    в
+                    котором вы разберетесь в сложных конструкциях и,<br>
+                    наконец, заговорите как профи.<br>
+                    Курс включает 10 видео уроков + домашку после каждого.<br> В этом курсе собраны мои самые любимые
+                    темы:</strong>
+                </td>
+                <td class="dcf-txt-center"><strong>Раз в неделю в закрытом аккаунте я провожу разбор
+                    песни.<br>
+                    За пару дней до разбора я высылаю текст песни с пропусками.<br>
+                    Задача – до разбора послушать песню и заполнить пропущенные слова.</strong>
+                </td>
+            </tr>
+            <tr>
+                <td class="dcf-txt-justify"><strong>1. Порядок слов в предложении <br>
+                    2. 9 времён<br>
+                    3. Предлоги<br>
+                    4. Все о глаголе to be<br>
+                    5. Вопросы<br>
+                    6. Конструкции to be going to и used to<br>
+                    7. Пассивный залог<br>
+                    8. Модальные глаголы<br>
+                    9. Базовые фразовые<br>
+                    Кому подойдет курс? Всем от уровня "я ниче не знаю" до уровня "что-то вроде знаю, но все равно ниче
+                    не
+                    понимаю". Если пафосными терминами, то от Beginner до Intermediate.</strong>
+                </td>
+                <td class="dcf-txt-justify" style="border-right: white 2px solid; border-left: white 2px solid"><strong>1.
+                    Perfect Continuous<br>
+                    2. Косвенная речь/согласование времён<br>
+                    3. Прошедшее время модальных глаголов (которого как бы не существует, но существует)<br>
+                    4. Условные предложения (тот самый пример про Романа Аркадьевича)<br>
+                    5. Сложные типы вопросов<br>
+                    6. Все формы Passive Voice<br>
+                    7. Числительные всех видов (это только один, два, три...)<br>
+                    8. Вводные слова, которые сразу добавят вашей речи офигенности<br>
+
+                    Кому подойдет курс? Всем, кто уже знает как работают модальные глаголы, и чем отличается Past Simple
+                    от
+                    Present Perfect. Если пафосными терминами, то от Pre-Intermediate до Upper-Intermediate. </strong>
+                </td>
+                <td class="dcf-txt-justify"><strong>Во время эфира я рассказываю какие слова были пропущены, какие
+                    крутые
+                    обороты
+                    использовались, почему грамматически авторы взяли те или иные времена и конструкции.<br>
+                    Ты можешь задать любой вопрос по тексту песни. Но кроме самих эфиров, которые я ЕСТЕСТВЕННО
+                    сохраняю,
+                    есть
+                    группа в WhatsApp.<br>
+                    Туда можно писать 24/7 и уточнять все, что душе угодно.<br>
+                    Песни на разбор выбираем вместе.<br>
+                    Таким образом, разбирая свои любимые песни на английском, ты запомнишь массу новых слов, подтянешь
+                    грамматику и узнаешь самые часто используемые обороты и выражения.<br>
+                    Кому подойдет участие в группе? <br>ВСЕМ!!! Всем, кто хочет выучить/подтянуть инглиш.</strong>
+                </td>
+            </tr>
+            <tr>
+                <td class="dcf-txt-justify"><strong style="font-size: larger">
+                    Цена:
+                    <br>
+                    <span class="pricecolor">6 999 руб. </span> с обратной связью и устной частью <br>
+                    <span class="pricecolor">4 599 руб. </span>без обратной связи и устной части
+                </strong></td>
+                <td class="dcf-txt-justify" style="border-right: white 2px solid; border-left: white 2px solid"><strong
+                        style="font-size: larger">
+                    Цена:<br>
+                    <span class="pricecolor">5 999 руб. </span> с обратной связью и устной частью <br>
+                    <span class="pricecolor">3 999 руб. </span> без обратной связи и устной части
+                </strong></td>
+                <td class="dcf-txt-justify"><strong style="font-size: larger">
+                    Цена<br>
+                    <span class="pricecolor">1 400 руб./месяц </span> (4-5 занятий, в зависимости от количества дней
+                    в месяце)
+                </strong></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid" style="color: white; padding-bottom: 30px;">
+        <div class="row">
+            <div class="col-lg-12"><h1 class="text-center">Консультация</h1></div>
+        </div>
+        <div class="row" style="text-align: center; font-size: small">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <p1 class="h3">Попасть ко мне на индивидуальные занятия невозможно. Но можно записаться на разовую
+                    консультацию, где без всяких "супер тестов" я определю твой реальный уровень и подскажу как стоит
+                    заниматься именно тебе. Кому-то нужен носитель языка, кому-то необходимо подтянуть грамматику,
+                    кому-то
+                    навыки говорения и аудирования.
+                    Если ты не знаете, где твои слабые места, или как лучше начать процесс обучения, записывайся на
+                    консультацию.
+                    <br>
+                    <br>
+                    <span style="text-align: center">
+                Цена консультации <span class="pricecolor" style="font-weight: bold"> 2 000 руб. </span>
+                </span>
+                </p1>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+    <div style="text-align: center; width: 100%; padding-bottom: 70px;">
+        <button type="button" onclick='window.open("https://yadi.sk/i/KhnkdE-O9CCBEA", "_blank");'
+                class="btn btn-xl" style="font-size: 0.8em">
+            <span class="fa fa-file-pdf-o"></span> ГАЙД ПО АРТИКЛЯМ СКАЧАТЬ БЕСПЛАТНО
+        </button>
+    </div>
+    <!--HI THERE END -->
+    <!-- Services Section -->
+
+
+    <!-- Courses Section -->
+    {% if top_courses.count > 0 %}
+    <section id="portfolio" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Курсы</h2>
+                    <h3 class="section-subheading text-muted">Доступные курсы</h3>
+                </div>
+            </div>
+            <div class="row">
+                {% for top_pick in top_courses %}
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link"
+                       data-toggle="modal"
+                       onclick="ajax_popup_course_preview({{ top_pick.course.id }});" ;>
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        {% if top_pick.course.image == '' %}
+                        <img src="{% static 'img/dummy.png' %}"
+                             class="img-responsive" alt="">
+                        {% else %}
+                        <img src="{{ top_pick.course.image.url }}"
+                             class="img-responsive" alt="">
+                        {% endif %}
+
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>{{ top_pick.course.title }}</h4>
+                        <p class="text-muted">{{ top_pick.course.category }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+
+    <!-- Contact Us Section -->
+    <section id="contact" style="display: none">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Обратная связь</h2>
+                    <h3 class="section-subheading text-muted">Любые комментарии, впоросы и предложения.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form name="sentMessage" id="contactForm" novalidate="">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ contact_form.name }}
+                                    <p id="id_contact_name_danger" class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    {{ contact_form.email }}
+                                    <p id="id_contact_email_danger" class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    {{ contact_form.phone }}
+                                    <p id="id_contact_phone_danger" class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {{ contact_form.message }}
+                                    <p id="id_contact_message_danger" class="help-block text-danger"></p>
+                                </div>
+                                <div class="form-group">
+                                    {{ contact_form.captcha }}
+                                    <p id="id_contact_captcha_danger" class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <div id="success"></div>
+                                <button onclick="ajax_send_message();"
+                                        id="id_send_msg_btn"
+                                        name="send_msg_btn"
+                                        type="button"
+                                        class="btn btn-xl">Отправить сообщение
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright © Alexander Sidorov 2020</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="https://twitter.com/MusicBrained"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.facebook.com/alex.thunder.507/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="mailto:s1d0r0valexiv@gmail.com"><i class="fa fa-google"></i></a></li>
+                        <li><a href="https://github.com/alexthunder13337"><i class="fa fa-github"></i></a></li>
+                        <li><a href="https://t.me/alexthunder1337"><i class="fa fa-telegram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!----------------------------------------------------------------------------->
+
+    <!-- Modal -->
+    <div id="ajax_response_course_preview"
+         name="ajax_response_course_preview"></div>
+    <div id="ajax_response_login"></div>
+    <div id="ajax_response_register"></div>
+    <div id="ajax_response_logout"></div>
+    <!-- end modal -->
+</div>
+<!----------------------------------------------------------------------------->
+<script>
+    $(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a:not(".dropdown-toggle")') ) {
+        $(this).collapse('hide');
+    }
+});
+
+    function newHeart() {
+        var hearts = $('.heart');
+        if (hearts.length >= 24) return setTimeout(newHeart, 1000);
+        var c = $('.heart-container:first').clone();
+        var anims = ['swing', 'spin'];
+        var a = anims[Math.round(Math.random())];
+        c.find('.heart')
+            .css('opacity', 0.2 + Math.random() * 0.8)
+            .css('-webkit-animation-name', a)
+            .css('-moz-animation-name', a);
+        c.css('left', (10 + Math.random() * ($('body').innerWidth() - 10)) + 'px');
+        c.css('-webkit-animation-name', 'fall');
+        c.css('-webkit-animation-duration', (4 + Math.random() * 14) + 's');
+        c.css('-webkit-transform', 'scale(' + (0.4 + Math.random() * 2) + ')');
+        c.css('-moz-animation-duration', (4 + Math.random() * 14) + 's');
+        c.css('-moz-transform', 'scale(' + (0.4 + Math.random() * 2) + ')');
+        $('#hearts').append(c);
+        c.bind('animationend', function () {
+            c.remove();
+        });
+        c.bind('webkitAnimationEnd', function () {
+            c.remove();
+        });
+        setTimeout(newHeart, 200);
+    }
+
+    setTimeout(newHeart, 200);
+</script>
+
+{% include "landpage/main/js.html" %}
+
+
+{% endblock content %}

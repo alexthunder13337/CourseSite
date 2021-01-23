@@ -1,0 +1,47 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-fixed-top navbar-course">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Навигация</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/landpage">English Marietta</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden active">
+                    <a href="#page-top"></a>
+                </li>
+                <li class="">
+                    <a class="page-scroll" href="/landpage">Главная</a>
+                </li>
+                <li class="">
+                    <a class="page-scroll" href="/courses">Курсы</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="">
+                    <a class="page-scroll" style="cursor: default"> Пользователь: {{ user.get_full_name }} </a>
+                </li>
+                <li class="">
+                    <a style="cursor: pointer;" onclick="ajax_logout();">Выход</a>
+                </li>
+
+                {% else %}
+                <li class="">
+                    <a style="cursor: pointer;" onclick="ajax_popup_login();">Войти</a>
+                </li>
+                <li class="">
+                    <a onclick="ajax_popup_register();" style="cursor: pointer">Регистрация</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

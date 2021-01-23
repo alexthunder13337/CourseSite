@@ -1,0 +1,85 @@
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="table-responsive">
+                          <table class="table table-hover table-striped">
+                              <thead>
+                                  <tr>
+                                      <th>Урок #</th>
+                                      <th>Название</th>
+                                      <th>
+                                          <button onclick="ajax_lesson_modal(0);"
+                                                       id="add_lesson_btn"
+                                                     name="add_lesson_btn"
+                                                     type="button"
+                                                    class="btn btn-sm btn-success">
+                                            <i class="fa fa-plus"></i> Создать
+                                        </button>
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              {% for lesson in lessons %}
+                              <tr>
+                                  <td align="left" valign="left">{{ lesson.lesson_num }}</td>
+                                  <td align="left" valign="left">{{ lesson.title }}</td>
+                                  <td align="left" valign="left">
+                                      <button onclick="ajax_lesson_modal({{ lesson.lesson_id }});"
+                                                   id="edit_{{ lesson.lesson_id }}_btn"
+                                                 name="edit_{{ lesson.lesson_id }}_btn"
+                                                 type="button"
+                                                class="btn btn-sm btn-warning">
+                                          <i class="fa fa-pencil"></i> Изменить
+                                      </button>
+                                      <button onclick="ajax_delete_lesson({{ lesson.lesson_id }});"
+                                                   id="del_{{ lesson.lesson_id }}_btn"
+                                                 name="del_{{ lesson.lesson_id }}_btn"
+                                                 type="button"
+                                                class="btn btn-sm btn-danger">
+                                           <i class="fa fa-minus"></i> Удалить
+                                      </button>
+                                      <button onclick="window.location.href='/teacher/course/{{ course.id }}/lessons/{{ lesson.lesson_id }}/lectures';"
+                                              id="opn_{{ lesson.lesson_id }}_btn"
+                                              name="opn_{{ lesson.lesson_id }}_btn"
+                                              type="button"
+                                              class="btn btn-sm btn-primary">
+                                          <i class="fa fa-video-camera"></i> Редактировать лекции
+                                      </button>
+                                      {% for key, value in hw_dict.items %}
+                                        {% if key == lesson.lesson_id and value != 0 %}
+                                      <button onclick="ajax_hwlesson_modal({{ value }}, {{ lesson.lesson_id }});"
+                                              id="add_hw_{{ lesson.lesson_id }}_btn"
+                                              name="add_hw_{{ lesson.lesson_id }}_btn"
+                                              type="button"
+                                              class="btn btn-sm btn btn-sm btn-warning">
+                                          <i class="fa fa-pencil"></i> Изменить ДЗ
+                                      </button>
+                                        {% elif key == lesson.lesson_id and value == 0 %}
+                                      <button onclick="ajax_hwlesson_modal(0, {{ lesson.lesson_id }});"
+                                              id="add_hw_{{ lesson.lesson_id }}_btn"
+                                              name="add_hw_{{ lesson.lesson_id }}_btn"
+                                              type="button"
+                                              class="btn btn-sm btn-default">
+                                          <i class="fa fa-pencil"></i> Добавить ДЗ
+                                      </button>
+                                        {% endif %}
+                                      {% empty %}
+                                      <button onclick="ajax_hwlesson_modal(0, {{ lesson.lesson_id }});"
+                                              id="add_hw_{{ lesson.lesson_id }}_btn"
+                                              name="add_hw_{{ lesson.lesson_id }}_btn"
+                                              type="button"
+                                              class="btn btn-sm btn-default">
+                                          <i class="fa fa-pencil"></i> Добавить ДЗ
+                                      </button>
+                                      {% endfor %}
+                                  </td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>

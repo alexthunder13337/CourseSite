@@ -1,0 +1,72 @@
+{% extends 'course/base.html' %}
+{% load staticfiles %}
+{% block content %}
+{% if tier1 or tier2 %}
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Уроки
+                    <small></small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-university"></i>  <a href="/courses">Курсы</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-compass"></i> {{ course.title }}
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-university"></i> Уроки
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Weeks & Lectures -->
+        <div id="ajax_lesson_table"
+           name="ajax_lesson_table"></div>
+        <!-- /.row -->
+
+
+<!-- /.Modal -->
+<div id="ajax_modal_placeholder"
+   name="ajax_modal_placeholder"></div>
+
+<div id="ajax_hw_modal"
+   name="ajax_hw_modal"></div>
+<!-- /.Modal -->
+
+<script>
+    $(document).ready(function(){
+        ajax_refresh_lesson_table();
+    });
+
+    function ajax_refresh_lesson_table()
+    {
+        $.ajax( 'lessons/lesson_table', {
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            type: 'post',
+            success: function(result) {
+               // success code execution here
+               $('#ajax_lesson_table').html(result); // Update UI.
+            },
+            error: function(xhr,status,error) {
+                // error code here
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+    }
+
+</script>
+{% else %}
+<h1>У вас нет доступа к урокам. Обратитесь к администрации сайта</h1>
+{% endif %}
+{% endblock content %}
+

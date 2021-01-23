@@ -1,0 +1,153 @@
+{% extends 'teacher/base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Уроки
+                </h1>
+                <ol class="breadcrumb">
+                    <li>
+                        <i class="fa fa-suitcase"></i>  <a href="/teaching">Учитель</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-compass"></i> {{ course.title }}
+                    </li>
+                    <li class="active">
+                        <i class="fa fa-university"></i> Уроки
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Lessons -->
+        <div id="ajax_lesson_table"
+           name="ajax_lesson_table"></div>
+        <!-- /.row -->
+
+<!-- Modal -->
+<div id="ajax_lesson_modal"
+   name="ajax_lesson_modal"></div>
+<div id="ajax_hwlesson_modal"
+   name="ajax_hwlesson_modal"></div>
+<!-- end modal -->
+
+<script>
+    /**
+     * When the page loads up, get the table data.
+     */
+    $(document).ready(function(){
+        ajax_refresh_lesson_table();
+    });
+                  
+    function ajax_refresh_lesson_table()
+    {
+        $.ajax( 'lesson_table', {
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            type: 'post',
+            success: function(result) {
+               // success code execution here
+               $('#ajax_lesson_table').html(result); // Update UI.
+            },
+            error: function(xhr,status,error) {
+                // error code here
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+    }
+    /**
+     *  Function will call AJAX function to load the modal for the new Lesson
+     *  creation UI.
+     */
+    function ajax_lesson_modal(lesson_id)
+    {
+        if (lesson_id == 0)
+        {
+            $('#add_lesson_btn').prop("disabled", true); // Lock button
+        }
+        else
+        {
+            $('#edit_'+lesson_id+'_btn').prop("disabled", true); // Lock button
+        }
+        $.ajax( 'lesson_modal', {
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'lesson_id': lesson_id
+            },
+            type: 'post',
+            success: function(result) {
+                // success code execution here
+                $('#ajax_lesson_modal').html(result); // Update UI.
+                $('#lesson_modal').modal();           // Unhide view.
+            },
+            error: function(xhr,status,error) {
+                // error code here
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+    }
+    function ajax_hwlesson_modal(hw_id, lesson_id)
+    {
+        $.ajax( 'hwlesson_modal', {
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'hw_id': hw_id,
+                'lesson_id': lesson_id
+            },
+            type: 'GET',
+            success: function(result) {
+                // success code execution here
+                $('#ajax_hwlesson_modal').html(result);// Update UI.
+                $('#hwlesson_modal').modal();           // Unhide view.
+            },
+            error: function(xhr,status,error) {
+                alert("ERROR EDITING HOMEWORK")
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+    }
+
+
+    /**
+     *  Function will call AJAX function to delete the teacher's Lesson.
+     */
+    function ajax_delete_lesson(lesson_id)
+    {
+        $('#del_'+lesson_id+'_btn').prop("disabled", true); // Lock button
+        $.ajax( 'delete_lesson', {
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'lesson_id' : lesson_id
+            },
+            type: 'post',
+            success: function(result) {
+                // success code execution here
+                $('#del_'+lesson_id+'_btn').prop("disabled", false); // Unlock button
+                if (result.status == 'success')
+                {
+                    ajax_refresh_lesson_table();
+                }
+            },
+            error: function(xhr,status,error) {
+                // error code here
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+    }
+
+</script>
+
+{% endblock content %}

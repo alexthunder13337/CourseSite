@@ -1,0 +1,183 @@
+<div id="ajax_lectures_table"
+   name="ajax_lectures_table">
+   {% if lessons.count == 0 %}
+   <div class="jumbotron">
+       <h1>Уроки</h1>
+        <p>Уроки в данный момент отсутствуют.</p>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="1">Урок #</th>
+                            <th colspan="1">Название</th>
+                            <th colspan="1">Лекции</th>
+                            <th colspan="3" style="text-align: center;">Домашнее задание</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lesson in lessons %}
+                        <tr>
+                            <td>{{ lesson.lesson_num }}</td>
+                            <td>{{ lesson.title }}</td>
+                            <td>
+                                <button onclick="window.open('/course/'+{{ course.id }}+'/lessons/'+{{ lesson.lesson_id }}+'/lectures', '_blank');"
+                                        id="view_{{ note.upload_id }}_btn"
+                                        name="view_{{ note.upload_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-primary">
+                                    <i class="fa fa-file"></i> Перейти к лекциям
+                                </button>
+                            </td>
+                            <td>
+                                {% if lesson.lesson_id in hw_lessons %}
+                                <button onclick="ajax_view_lesson_hw_modal({{ lesson.lesson_id }});"
+                                        id="view_lesson_hw_{{ lesson.lesson_id }}_btn"
+                                        name="view_lesson_hw_{{ lesson.lesson_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-info">
+                                    <i class="fa fa-pencil"></i> Открыть домашнее задание к уроку
+                                </button>
+                                {% else %}
+                                ДЗ к данному уроку отсутсвует
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if tier2 %}
+                                {% if lesson.lesson_id in hw_lessons %}
+                                {% for homework in homeworks %}
+                                {% if lesson.lesson_id = homework.Lesson.lesson_id %}
+                                {% if homework.speaking %}
+                                <button onclick="window.open('{{homework.speaking.url}}', '_blank');"
+                                        id="open_hw_speaking_{{ lesson.lesson_id }}_btn"
+                                        name="open_hw_answers_{{ lesson.lesson_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-info">
+                                    <i class="fa fa-pencil"></i> Устаная часть
+                                </button>
+                                {% else %}
+                                Файл с устной частью отсутствует
+                                {%  endif %}
+                                {% elif lesson.lesson_id != homework.Lesson.lesson_id %}
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+                                {% if lesson.lesson_id in hw_lessons %}
+                                {% for key, value in hw_students.items %}
+                                {% if key == lesson.lesson_id and value == user.id %}
+                                    {% for inst in student_hws %}
+                                        {% if inst.lesson.lesson_id == lesson.lesson_id and inst.student.user.id == user.id %}
+                                    <button onclick="ajax_student_send_hw({{ inst.student_hw_id }}, {{ lesson.lesson_id }});"
+                                        id="student_send_hw_{{ lesson.lesson_id }}_btn"
+                                        name="student_send_hw_{{ lesson.lesson_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-warning">
+                                    <i class="fa fa-pencil"></i> Изменить файл домашнего задания
+                                </button>
+                                {% endif %}
+                                {% endfor %}
+                                {% elif key == lesson.lesson_id and value == 0 %}
+                                <button onclick="ajax_student_send_hw(0, {{ lesson.lesson_id }});"
+                                        id="student_send_hw_{{ lesson.lesson_id }}_btn"
+                                        name="student_send_hw_{{ lesson.lesson_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-success">
+                                    <i class="fa fa-pencil"></i> Отправить выполненное домашнее задание преподавателю
+                                </button>
+                                {% endif %}
+                                {% empty %}
+                                <button onclick="ajax_student_send_hw(0, {{ lesson.lesson_id }});"
+                                        id="student_send_hw_{{ lesson.lesson_id }}_btn"
+                                        name="student_send_hw_{{ lesson.lesson_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-success">
+                                    <i class="fa fa-pencil"></i> Отправить выполненное домашнее задание преподавателю
+                                </button>
+                                {% endfor %} <!-- ЦИКЛ ДЛЯ СЛОВАРЯ УРОКОВ И ДОМАШЕК -->
+                                {% endif %} <!-- ЕСЛИ ЕСТЬ ДОМАШКА ТО ПОКАЗАТЬ КНОПКИ ОТПРАВКИ РЕШЕНННОГО ДЗ -->
+                                {% else %}
+                                {% if lesson.lesson_id in hw_lessons %}
+                                {% for homework in homeworks %}
+                                {% if lesson.lesson_id = homework.Lesson.lesson_id %}
+                                {% if homework.answers %}
+                                <button onclick="window.open('{{homework.answers.url}}', '_blank');"
+                                        id="open_hw_answers_{{ lesson.lesson_id }}_btn"
+                                        name="open_hw_answers_{{ lesson.lesson_id }}_btn"
+                                        type="button"
+                                        class="btn btn-sm btn-success">
+                                    <i class="fa fa-pencil"></i> Ответы к ДЗ
+                                </button>
+                                {% else %}
+                                Файл с ответами на ДЗ отсутствует
+                                {%  endif %}
+                                {% elif lesson.lesson_id != homework.Lesson.lesson_id %}
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+                                {% endif %}
+                            </td>
+                        {% endfor %} <!-- ЦИКЛ ПО ВСЕМ УРОКАМ -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %} <!-- ПРОВЕРКА НАЛИЧИЯ УРОКОВ -->
+</div>
+
+<script>
+    /**
+     *  Function will call AJAX function to load the video player modal for the lecture.
+     */
+    function ajax_view_lesson_hw_modal(lesson_id)
+    {
+        var url = '/course/'+{{ course.id }}+'/lessons/'+lesson_id+'/view_lesson_hw';
+
+        $('#view_lesson_hw_' + lesson_id + '_btn').prop("disabled", true); // Lock button
+        $.ajax( url, {
+           data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'lesson_id': lesson_id,
+           },
+           type: 'post',
+           success: function(result) {
+                // success code execution here
+                $('#ajax_modal_placeholder').html(result); // Update UI.
+                $('#view_homework').modal();           // Unhide view.
+           },
+           error: function(xhr,status,error) {
+                // error code here
+           },
+           complete: function(xhr,status) {
+                // completion code here
+           }
+        });
+    }
+    function ajax_student_send_hw(student_hw_id, lesson_id)
+    {
+        var url = '/course/'+{{ course.id }}+'/lessons/'+ lesson_id +'/sendhwlesson_modal';
+        $.ajax( url, {
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'student_hw_id': student_hw_id,
+                'lesson_id': lesson_id,
+                'student_hw_id': student_hw_id
+            },
+            type: 'post',
+            success: function(result) {
+                // success code execution here
+                $('#ajax_hw_modal').html(result);// Update UI.
+                $('#sendhwlesson_modal').modal();// Unhide view.
+            },
+            error: function(xhr,status,error) {
+                alert("ERROR EDITING HOMEWORK")
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+    }
+</script>

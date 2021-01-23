@@ -1,0 +1,42 @@
+<form enctype="multipart/form-data" name="new_course_form" id="new_course_form">
+    {% csrf_token %}
+    <input type="hidden"
+             id="id_student_hw_id"
+           name="student_hw_id"
+          value={{student_hw_id}}>
+        <input type="hidden"
+             id="id_lesson_id"
+           name="lesson_id"
+          value={{lesson_id}}>
+    <input type="hidden"
+             id="id_student"
+           name="student"
+          value={{student.student_id}}>
+
+    <div class="row">
+        <div class="form-group">
+            <div class="fieldWrapper">
+                <label class="col-sm-3 control-label">
+                    Комментарий
+                </label>
+                <div class="col-sm-9">
+                    {{ form.comment }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="form-group">
+            <div class="fieldWrapper">
+                <label class="col-sm-3 control-label">
+                    Файл
+                </label>
+                <div class="col-sm-9">
+                    {{ form.file }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+</form>

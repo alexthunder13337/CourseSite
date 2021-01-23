@@ -1,0 +1,41 @@
+<form enctype="multipart/form-data" name="new_course_form" id="new_course_form">
+    {% csrf_token %}
+    <input type="hidden"
+             id="id_hw_id"
+           name="hw_id"
+          value={% if form.instance.hw_id != None %}"{{ form.instance.hw_id }}"{% else %}0{% endif %}>
+        <input type="hidden"
+             id="id_Lesson"
+           name="Lesson"
+          value={{ lesson_id }}>
+    <div class="row">
+        <div class="form-group">
+            <div class="fieldWrapper">
+                <div class="col-sm-9">
+                    {{ form.title }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="fieldWrapper">
+                <div class="col-sm-9">
+                    {{ form.media }}
+                    {{ form.description | safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="fieldWrapper">
+                <div class="col-sm-9">
+                    {{ form.file }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+</form>

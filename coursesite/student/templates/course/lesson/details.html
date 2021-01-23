@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<div class="modal fade" id="view_homework" role="dialog">
+    <div class="modal-dialog" style="width:750px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="btn btn-success pull-right" data-dismiss="modal">×</a>
+                <h4>ДЗ: {{ homework.title }}</h4>
+            </div>
+            <div class="modal-body">
+                <div style="position: relative;
+                margin: 1%;
+                width: 100%;">
+                            {{ homework.description|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div onclick="window.open('{{ homework.file.url }}', '_blank');"
+            style="position: fixed;
+            cursor: pointer;
+                bottom:5px;
+                border: 2px solid rgb(0,0,0);
+                background-color: rgba(243,126,23,0.85);
+                text-align: center;
+                vertical-align: middle;
+                left: 50%;
+                height: 50px;
+                padding: 10px;
+                border-radius: 5px;
+                transform: translate(-50%, 0);">
+                <span style="vertical-align: middle; font-size: large; font-weight: bold"> Скачать файл с домашним заданием:   </span>
+                <span style="vertical-align: middle; font-size: large"> {{homework.filename}} </span>
+            </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        // When this model hides, we will clear the contents of it.
+        $('#view_homework').on('hidden.bs.modal', function (e) {
+            // Clear all the code inside this modal.
+            $('#ajax_modal_placeholder').html('');
+            $('#view_lesson_hw_{{homework.Lesson.lesson_id}}_btn').prop("disabled", false); // Unlock button
+        })
+    });
+</script>

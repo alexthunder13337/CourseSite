@@ -1,0 +1,109 @@
+<div class="modal fade" id="lesson_modal" role="dialog">
+    <div class="modal-dialog" style="width:50%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
+                <h2 class="modal-title" id="myModalLabel">Изменить урок</h2>
+            </div>
+            <div class="modal-body">
+                {% include "teacher/lesson/form.html" with form=form %}
+                
+                <!-- Error Message Box -->
+                <div id="error_box" name="error_box" class="alert alert-danger alert-dismissable" hidden="true">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    ERROR: This is to be filled in by the "print_error" function. If you see this message that means there's an error with your javascript somewhere.
+                </div><!-- /.Error Message Box -->
+            </div>
+            <div class="modal-footer">
+                <button onclick="ajax_create_lesson();"
+                             id="submit_lesson_btn"
+                           name="submit_lesson_btn"
+                           type="button"
+                          class="btn btn-primary">
+                    <i class="fa fa-check-circle"></i> Сохранить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    /**
+     * Dynamic UI Code.
+     *  To give our application a dynamic feel, the following jQuery code will be
+     *  used to perform various UI changes.
+     */
+     $(document).ready(function(){
+        $('#lesson_modal').on('hidden.bs.modal', function (e) {
+            $('#lesson_modal').html('');
+            $('#add_lesson_btn').prop("disabled", false);
+            $('#edit_{{ form.instance.lesson_id }}_btn').prop("disabled", false);
+                               
+        });
+    });
+    
+
+    /**
+     *  Function will call AJAX function to load the register.
+     */
+    function ajax_create_lesson()
+    {
+        $('#submit_lesson_btn').prop("disabled", true); // Lock button
+        
+        // create a FormData Object using your form dom element
+        var data = new FormData();
+        data.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        data.append('lesson_id', $('#id_lesson_id').val());
+        data.append('title', $('#id_title').val());
+        data.append('description', $('#id_description').val());
+        data.append('lesson_num', $('#id_lesson_num').val());
+        jQuery.ajax({
+            url: 'save_lesson',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+            type: 'POST',
+            success: function(json_result){
+                // success code execution here
+                $('#submit_lesson_btn').prop("disabled", false); // Unlock button
+                if (json_result.status == "success")
+                {
+                    $('#lesson_modal').modal('hide');
+                    ajax_refresh_lesson_table();
+                }
+                else
+                {
+                    print_error(json_result.message);
+                }
+            },
+            error: function(xhr,status,error) {
+                // error code here
+            },
+            complete: function(xhr,status) {
+               // completion code here
+            }
+        });
+
+    }
+
+    /**
+     * Prints a error box with the contents of the errors received from the server.
+     */
+    function print_error(json_result)
+    {
+        $('#error_box').prop("hidden", false); // Display error box.
+    
+        // Iterate through the JSON array of arrays and generate an error string.
+        var message = "<b>Ошибка!</b><hr/>";
+        var data = $.parseJSON(json_result)
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) { // this will check if key is owned by data object and not by any of it's ancestors
+                message += "<p>" + key + ": " + data[key] + "<p>";
+            }
+        }
+    
+        // Replace the error string with the contents of the error box.
+        $('#error_box').html(message);
+    }
+</script>

@@ -1,0 +1,14 @@
+/* TEAM */
+        Lead Developer: Aleksandr Sidorov
+        Contact: s1d0r0valexiv [at] gmail.com
+        From: Moscow, Russia
+
+
+/* THANKS */
+        Thanks for checking us out!
+
+
+/* TECHNOLOGY COLOPHON */
+        Django
+        HTML5
+        Twitter Bootstrap
